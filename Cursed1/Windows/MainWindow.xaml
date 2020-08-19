@@ -1,0 +1,214 @@
+﻿<Window x:Class="Cursed1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Cursed1"
+        mc:Ignorable="d"
+        Title="Flight Management" MinHeight="450" MinWidth="800" Width="900"
+        FontFamily="Segoe UI Symbol">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <!--Авторизация-->
+        <StackPanel Grid.Row="0" Margin="0,10,15,0" Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBlock FontFamily="georgia" FontSize="14"> 
+                <Hyperlink Click="TextBlock_Click">Log in</Hyperlink>
+            </TextBlock>
+        </StackPanel>
+        <!--Контент-->
+        <StackPanel Grid.Row="1" x:Name="OutputView">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!--Selection-->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="10">
+                    <TabControl x:Name="Selection">
+                        
+                        <!-- Searching -->
+                        <TabItem x:Name="searchTab" FontSize="14"
+                                 Header="Search">
+                            <!--ContentTab -->
+                            <TabItem.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0" Orientation="Vertical" Margin="5">
+                                        <TextBlock Margin="5,5,5,0" Text="FlightID" FontSize="9"/>
+                                        <TextBox x:Name="pk" Margin="5,0,5,5" Width="80"/>
+                                        
+                                        <TextBlock Margin="5,5,5,0" Text="RouteID" FontSize="9"/>
+                                        <TextBox x:Name="fk" Margin="5,0,5,5" Width="80"/>
+
+                                        <TextBlock Margin="5,5,5,0" Text="SeatCount" FontSize="9"/>
+                                        <TextBox x:Name="seats" Margin="5,0,5,5" Width="80"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">
+                                        <TextBlock Margin="5,5,5,0" Text="Departure point" FontSize="9"/>
+                                        <TextBox x:Name="depPoint" Margin="5,0,5,5" Width="200"/>
+
+                                        <TextBlock Margin="5,5,5,0" Text="Arrival point" FontSize="9"/>
+                                        <TextBox x:Name="depDate" Margin="5,0,5,5" Width="200"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2" Orientation="Vertical" Margin="5">
+                                        <TextBlock Margin="5,5,5,0" Text="Departure date" FontSize="9"/>
+                                        <TextBox x:Name="arrPoint" Margin="5,0,5,5" Width="200"/>
+
+                                        <TextBlock Margin="5,5,5,0" Text="Arrival date" FontSize="9"/>
+                                        <TextBox x:Name="arrDate" Margin="5,0,5,5" Width="200"/>
+
+                                        <Button x:Name="Search" Content="&#xE1A3;" Margin="10" Padding="3"
+                                                VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="Search_Click"/>
+                                    </StackPanel>
+
+                                </Grid>
+                                
+                            </TabItem.Content>
+                        </TabItem>
+                        
+                        <!-- Filtering -->
+                        <TabItem x:Name="filterTab" FontSize="14"
+                                 Header="Filter">
+                            <!--ContentTab-->
+                            <TabItem.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition MinWidth="150" Width="Auto"/>
+                                        <ColumnDefinition MinWidth="150" Width="Auto"/>
+                                        <ColumnDefinition MinWidth="80" Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <ComboBox Height="25" VerticalContentAlignment="Center"
+                                              Grid.Column="0" Margin="20">
+                                        <ComboBoxItem Content="Flight ID"/>
+                                        <ComboBoxItem Content="Route ID"/>
+                                        <ComboBoxItem Content="Departure point"/>
+                                        <ComboBoxItem Content="Arrival point" />
+                                        <ComboBoxItem Content="Departure date"/>
+                                        <ComboBoxItem Content="Arrival date"/>
+                                        <ComboBoxItem Content="Seat count"/>
+                                    </ComboBox>
+
+                                    <ComboBox Height="25" VerticalContentAlignment="Center"
+                                              Grid.Column="1" Margin="20" FontSize="14">
+                                        <ComboBoxItem>
+                                            <TextBlock Text="LoveMe.Blok"/>
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            <TextBlock Text="Gustav Ahr"/>
+                                        </ComboBoxItem>
+                                    </ComboBox>
+
+                                </Grid>
+                            </TabItem.Content>
+                        </TabItem>
+                        
+                        <!-- Sorting -->
+                        <TabItem x:Name="sortingTab" FontSize="14" 
+                                 Header="Sorting">
+                            <TabItem.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition MinWidth="150" Width="Auto"/>
+                                        <ColumnDefinition MinWidth="150" Width="Auto"/>
+                                        <ColumnDefinition MinWidth="80" Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <ComboBox Name="TableHeaderList" Height="25" VerticalContentAlignment="Center"
+                                              Grid.Column="0" Margin="20">
+                                        <ComboBoxItem Content="Flight ID" Tag="PK_Flight"/>
+                                        <ComboBoxItem Content="Route ID" Tag="FK_Route"/>
+                                        <ComboBoxItem Content="Departure point" Tag="DeparturePoint"/>
+                                        <ComboBoxItem Content="Arrival point" Tag="ArrivalPoint"/>
+                                        <ComboBoxItem Content="Departure date" Tag="DepartureDate"/>
+                                        <ComboBoxItem Content="Arrival date" Tag="ArrivalDate"/>
+                                        <ComboBoxItem Content="Seat count" Tag="SeatCount"/>
+                                    </ComboBox>
+
+                                    <ComboBox Name="SortingList" Height="25" VerticalContentAlignment="Center"
+                                              Grid.Column="1" Margin="20" FontSize="14">
+                                        <ComboBoxItem>
+                                            <TextBlock Text="&#xE1FC; Ascending"/>
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            <TextBlock Text="&#xE1FE; Descending"/>
+                                        </ComboBoxItem>
+                                    </ComboBox>
+
+                                    <Button x:Name="DoSort" Grid.Column="2" Margin="20" Click="DoSort_Click">
+                                        <TextBlock Text="Just do it &#xE007;"/>
+                                    </Button>
+                                    
+                                </Grid>
+                            </TabItem.Content>
+                        </TabItem>
+                        
+                    </TabControl>
+                </StackPanel>
+
+                <!--Data Base-->
+                <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10">
+                    <ListView x:Name="DB" FontSize="13" SelectedItem="{Binding Selected}" SelectionMode="Single">
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="False" >
+                                <GridViewColumn DisplayMemberBinding="{Binding PK_Flight}" Width="60">Flight ID</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding FK_Route}" Width="60">Route ID</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding DeparturePoint}" Width="120" >Departure Point</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding ArrivalPoint}" Width="120" >Arrival Point</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding DepartureDate}" Width="160" >Departure Date</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding ArrivalDate}" Width="160" >Arrival Date</GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding SeatCount}" Width="70"  >Seat Count</GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+            </Grid>
+
+        </StackPanel>
+        <!--Меню-->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left">
+            
+            <Button Command="{Binding UpdateDateFromDataBase, Mode=OneTime}"
+                    Margin="10" Width="35" Height="35" HorizontalAlignment="Left"
+                    x:Name="Exit" Click="Exit_Click">
+                <TextBlock FontSize="20">
+                        <Run Text="&#xE10A;" />
+                </TextBlock>
+            </Button>
+        
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            
+            <Button Command="{Binding UpdateDate, Mode=OneTime}"
+                    Margin="10" Width="35" Height="35" HorizontalAlignment="Right"
+                    x:Name="Update" Click="Update_Click">
+                <TextBlock FontSize="16">
+                    <Run Text="&#xE117;" />
+                </TextBlock>
+            </Button>
+
+            <Button Command="{Binding ContinueReservation, Mode=OneTime}"
+                    Margin="10" Width="35" Height="35" HorizontalAlignment="Right"
+                    x:Name="Reservation" Click="Reservation_Click">
+                <TextBlock FontSize="20">
+                    <Run Text="&#xE0EB;" />
+                </TextBlock>
+            </Button>
+
+        </StackPanel>
+    </Grid>
+</Window>
